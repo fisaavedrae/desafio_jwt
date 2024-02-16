@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken")
 const { verificaSiExisteCorreo } = require('../database/consultas');
 const { verificaEmail } = require('../utils');
@@ -9,7 +10,7 @@ const getUsuarioMiddleware = async (req, res, next) => {
     const querys = req.query
     const url = req.url
     console.log("---\n")
-    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta GET${url} con los parámetros: `, parametros, ` y con los querys: `, querys)
+    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta GET${url} con los parámetros: `, parametros, ` y con los querys: `, querys, " body:", req.body)
     console.log("\n---\n")
 
     try {
@@ -25,7 +26,7 @@ const getUsuarioMiddleware = async (req, res, next) => {
             const token = Authorization.split("Bearer ")[1]
             //console.log("Token:", token)
             try {
-                jwt.verify(token, "az_AZ")
+                jwt.verify(token, process.env.SECRET)
                 const { email } = jwt.decode(token)
                 //console.log(email)
                 if (email != "") {
@@ -66,7 +67,7 @@ const postUsuariosMiddleware = async (req, res, next) => {
     const querys = req.query
     const url = req.url
     console.log("---\n")
-    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta POST${url} con los parámetros: `, parametros, ` y con los querys: `, querys)
+    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta POST${url} con los parámetros: `, parametros, ` y con los querys: `, querys, " body:", req.body)
     console.log("\n---\n")
 
 
@@ -152,7 +153,7 @@ const postAuthMiddleware = async (req, res, next) => {
     const querys = req.query
     const url = req.url
     console.log("---\n")
-    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta POST${url} con los parámetros: `, parametros, ` y con los querys: `, querys)
+    console.log(` Hoy ${new Date()} Se ha recibido una consulta en la ruta POST${url} con los parámetros: `, parametros, ` y con los querys: `, querys, " body:", req.body)
     console.log("\n---\n")
 
     try {

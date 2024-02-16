@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs')
 const { createUsuario, readUsuario, verificaSiExisteCorreo, verificarCredenciales } = require("../database/consultas");
@@ -62,7 +63,7 @@ const postAuthController = async (req, res, next) => {
             if (passwordencriptada != "" && passwordencriptada != undefined) {
                 const passwordEsCorrecta = bcrypt.compareSync(password, passwordencriptada)
                 if (passwordEsCorrecta) {
-                    const token = jwt.sign({ email }, "az_AZ")
+                    const token = jwt.sign({ email }, process.env.SECRET)
                     res.send(token)
                 }
                 else {
