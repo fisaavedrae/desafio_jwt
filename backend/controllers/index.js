@@ -64,7 +64,11 @@ const postAuthController = async (req, res, next) => {
                 const passwordEsCorrecta = bcrypt.compareSync(password, passwordencriptada)
                 if (passwordEsCorrecta) {
                     const token = jwt.sign({ email }, process.env.SECRET)
-                    res.send(token)
+                    res.status(200).json({
+                        status: 'Success',
+                        message: 'Usuario Creado con exito',
+                        token: token,
+                    });
                 }
                 else {
                     res.status(400).json({
